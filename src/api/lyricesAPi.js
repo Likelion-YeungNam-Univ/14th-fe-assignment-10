@@ -1,12 +1,12 @@
+import axios from "axios";
+
 const fetchLyrics = async (artist, title) => {
   try {
-    const res = await fetch(
-      `https://api.lyrics.ovh/v1/${encodeURIComponent(
-        artist
-      )}/${encodeURIComponent(title)}`
+    const res = await axios.get(
+      `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`
     );
 
-    const data = await res.json();
+    const data = res.data;
 
     if (data.error) {
       return "가사를 찾을 수 없습니다.";
@@ -21,26 +21,15 @@ const fetchLyrics = async (artist, title) => {
 const fetchSuggestions = async (keyword) => {
 
   try {
-
-    const res = await fetch(
-
+    const res = await axios.get(
       `https://api.lyrics.ovh/suggest/${encodeURIComponent(keyword)}`
-
     );
-
-    const data = await res.json();
-
+    const data = res.data;
     return data.data;
-
   } catch (err) {
-
     console.error(err);
-
     return [];
-
   }
-
 };
 
-export { fetchLyrics };
-export { fetchSuggestions };
+export { fetchLyrics, fetchSuggestions };

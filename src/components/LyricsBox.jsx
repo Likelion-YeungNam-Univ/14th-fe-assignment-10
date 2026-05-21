@@ -1,24 +1,26 @@
 const styles = {
+
   container: `
     mt-6
-    max-h-[400px]
+    max-h-[600px]
     overflow-y-auto
     rounded-3xl
     border
-    border-white/10
-    bg-white/5
+    border-zinc-200
+    bg-gray-100
     p-6
+    shadow-sm
     backdrop-blur-xl
   `,
-
   lyrics: `
     whitespace-pre-wrap
     break-words
     text-[17px]
     leading-9
     tracking-wide
-    text-zinc-200
+    text-zinc-800
   `,
+
 };
 
 function LyricsBox({ lyrics }) {

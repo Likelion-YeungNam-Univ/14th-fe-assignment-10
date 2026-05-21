@@ -7,19 +7,19 @@ import { Disc3 } from "lucide-react";
 
 const styles = {
   container:
-    "h-screen overflow-hidden bg-[#0b0b0f] text-white",
+    "min-h-screen overflow-y-auto bg-white text-black",
 
   blurTopLeft:
-    "absolute left-0 top-[-120px] h-[400px] w-[400px] rounded-full bg-pink-500/30 blur-3xl",
+    "absolute left-0 top-[-120px] h-[400px] w-[400px] rounded-full bg-pink-300/30 blur-3xl",
 
   blurTopRight:
-    "absolute right-0 top-[200px] h-[400px] w-[400px] rounded-full bg-red-500/20 blur-3xl",
+    "absolute right-0 top-[200px] h-[400px] w-[400px] rounded-full bg-red-300/20 blur-3xl",
 
   blurBottom:
-    "absolute bottom-0 left-[30%] h-[400px] w-[400px] rounded-full bg-purple-500/20 blur-3xl",
+    "absolute bottom-0 left-[30%] h-[400px] w-[400px] rounded-full bg-purple-300/20 blur-3xl",
 
   layout:
-    "relative z-10 mx-auto flex min-h-screen max-w-6xl items-center justify-center px-6",
+    "relative z-10 mx-auto flex min-h-screen max-w-6xl items-start justify-center px-6 py-10",
 
   grid:
     "grid w-full gap-10 lg:grid-cols-2",
@@ -30,9 +30,9 @@ const styles = {
   title: `
     mb-6
     bg-gradient-to-r
-    from-white
-    via-pink-200
-    to-red-300
+    from-black
+    via-pink-500
+    to-red-500
     bg-clip-text
     text-6xl
     font-bold
@@ -41,7 +41,7 @@ const styles = {
   `,
 
   description:
-    "mb-10 text-lg text-zinc-400",
+    "mb-10 text-lg text-zinc-600",
 
   songsWrapper:
     "mt-8 space-y-3",
@@ -50,30 +50,31 @@ const styles = {
     w-full
     rounded-2xl
     border
-    border-white/10
-    bg-white/5
+    border-zinc-200
+    bg-white/80
     p-4
     text-left
+    shadow-sm
     backdrop-blur-xl
     transition
     duration-300
     hover:scale-[1.02]
-    hover:bg-white/10
+    hover:bg-zinc-100
   `,
 
   songTitle:
-    "font-semibold",
+    "font-semibold text-zinc-900",
 
   songArtist:
-    "text-sm text-zinc-400",
+    "text-sm text-zinc-500",
 
   rightCard: `
     rounded-[40px]
     border
-    border-white/10
-    bg-white/5
+    border-zinc-200
+    bg-white/80
     p-8
-    shadow-2xl
+    shadow-xl
     backdrop-blur-2xl
   `,
 
@@ -89,10 +90,10 @@ const styles = {
     justify-center
     rounded-full
     bg-gradient-to-br
-    from-pink-500
-    via-red-500
-    to-purple-500
-    shadow-2xl
+    from-pink-400
+    via-red-400
+    to-purple-400
+    shadow-lg
   `,
 
   spinningBorder: `
@@ -100,8 +101,8 @@ const styles = {
     inset-0
     rounded-full
     border-[6px]
-    border-white/10
-    border-t-white/60
+    border-black/10
+    border-t-black/50
   `,
 
   discCenter: `
@@ -110,18 +111,18 @@ const styles = {
     w-5
     rounded-full
     border
-    border-white/20
-    bg-black/60
+    border-black/10
+    bg-white
   `,
 
   discIcon:
     "z-10 text-white",
 
   songInfoTitle:
-    "text-3xl font-semibold",
+    "text-3xl font-semibold text-zinc-900",
 
   songInfoArtist:
-    "text-zinc-400",
+    "text-zinc-500",
 
   loading:
     "mt-20 text-center text-zinc-500",

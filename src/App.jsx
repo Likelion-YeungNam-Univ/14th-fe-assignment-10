@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchForm from "./components/SearchForm.jsx";
 import LyricsBox from "./components/LyricsBox.jsx";
-import { fetchLyrics, fetchSuggestions } from "./api/lyricesApi.js";
+import { fetchLyrics, fetchSuggestions } from "./api/lyricsAPi.js";
 
 import { Disc3 } from "lucide-react";
 
@@ -40,7 +40,10 @@ export default function App() {
 
             <p>원하는 노래의 가사를 검색해보세요.</p>
 
-            <SearchForm onSearch={handleSearch} />
+            <SearchForm
+              onSearch={handleSearch}
+              loading={loading}
+            />
 
             {songs.length > 0 && (
               <div>

@@ -1,0 +1,30 @@
+export default function LyricsBox({ lyrics }) {
+  return (
+    <div
+      className="
+        mt-6
+        max-h-[400px]
+        overflow-y-auto
+        rounded-3xl
+        border
+        border-white/10
+        bg-white/5
+        p-6
+        backdrop-blur-xl
+      "
+    >
+      <pre
+        className="
+          whitespace-pre-wrap
+          break-words
+          text-[17px]
+          leading-9
+          tracking-wide
+          text-zinc-200
+        "
+      >
+        {lyrics}
+      </pre>
+    </div>
+  );
+}

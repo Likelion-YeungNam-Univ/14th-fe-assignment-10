@@ -19,7 +19,7 @@ const styles = {
     "absolute bottom-0 left-[30%] h-[400px] w-[400px] rounded-full bg-purple-300/20 blur-3xl",
 
   layout:
-    "relative z-10 mx-auto flex min-h-screen max-w-6xl items-start justify-center px-6 py-10",
+    "relative z-10 mx-auto flex max-w-6xl min-h-screen items-center justify-center px-6 py-10 -translate-y-10",
 
   grid:
     "grid w-full gap-10 lg:grid-cols-2",

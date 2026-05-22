@@ -19,7 +19,7 @@ const fetchLyrics = (artist, title) => {
     .catch((err) => {
       console.error("가사 요청 실패", err);
 
-      return "에러 발생";
+      return "가사를 불러오지 못했습니다.";
     });
 };
 

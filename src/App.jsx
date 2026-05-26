@@ -1,7 +1,97 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const App = () => {
-  return <div className="text-3xl text-red-600">App</div>;
+  const [stationName, setStationName] = useState("")
+  const [stationList, setStationList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [errMessage, setErrMessage] = useState("")
+
+  const searchStation = async () => {
+    if (stationName.trim() === "") {
+      setErrMessage("정류장 이름을 입력해주세요.")
+      setStationList([])
+      return
+    }
+
+    try {
+      setIsLoading(true)
+      setErrMessage("")
+
+      const apiKey = import.meta.env.VITE_DAEGU_API_KEY
+
+      const response = await axios.get('https://api.odcloud.kr/api/15050946/v1/uddi:3ff249da-858b-4596-88b3-a06f725d7f0f', {
+        params: {
+        page: 1,
+        perPage: 5000,
+        serviceKey: apiKey,
+        },
+      })
+
+      const data = response.data
+      const rows = data.data || data.body?.items || []
+
+      const result = rows
+        .filter((station) => {
+          const name = station["정류소명"] || ""
+          return name.includes(stationName)
+        })
+        .map((station) => ({
+          name: station["정류소명"] || "",
+          busList: station["경유노선"] || "",
+        }))
+
+      setStationList(result)
+
+    } catch (error) {
+      setErrMessage("정류장 정보를 불러오지 못했습니다.")
+      setStationList([])
+    } finally {
+      setIsLoading(false)
+    }
+  };
+
+  return (
+    <div id="Main" className="min-h-screen bg-blue-100 flex items-center justify-center">
+      <div id="box" className="p-8 min-w-[900px] min-h-[650px] bg-white rounded-2xl border-4 border-gray-200">
+        <div className="flex flex-col gap-5">
+          <div className="font-black text-6xl text-blue-600">대구 버스 정류장 검색</div>
+          <div className="font-medium text-xl text-blue-900">버스 정류장과 정류장의 경유 노선을 확인하는 서비스입니다.</div>
+
+          <div className="mt-8 flex gap-8">
+            <input
+              value={stationName}
+              onChange={(e) => setStationName(e.target.value)}
+              placeholder="정류장 이름을 입력하세요."
+              className="flex-1 px-5 py-4 border-2 border-gray-200 rounded-xl outline-none text-lg focus:border-blue-500"
+            />
+
+            <button type="button" onClick={searchStation} className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700">
+              검색
+            </button>
+          </div>
+
+          {isLoading && (
+            <div className="p-4 bg-blue-50 border-2 border-blue-200 rounded-xl text-blue-700 font-bold">정류장 정보를 불러오는 중입니다.</div>
+          )}
+
+          {errMessage && (
+            <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-600 font-bold">{errMessage}</div>
+          )}
+
+          <div className="max-h-[320px] overflow-y-auto pr-2 flex flex-col gap-3">
+            {stationList.map((station) => (
+              <div key={station.id} className="p-5 bg-gray-50 border-2 border-gray-200 rounded-xl">
+                <div className="font-black text-2xl text-blue-600">{station.name}</div>
+                <div className="mt-5 font-bold text-gray-700">경유 노선: {station.busList || "정보 없음"}</div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default App;

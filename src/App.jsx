@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 const App = () => {
+  const [stationName, setStationName] = useState("")
+
+  const searchStation = () => {
+    if (stationName.trim() === "") {
+      alert("정류장 이름을 입력해주세요.");
+      return;
+    }
+
+    alert(`${stationName} 정류장을 검색합니다.`);
+  };
+
   return (
     <div id="Main" className="min-h-screen bg-blue-100 flex items-center justify-center">
       <div id="box" className="p-8 min-w-[900px] min-h-[650px] bg-white rounded-2xl border-4 border-gray-200">
@@ -10,11 +21,13 @@ const App = () => {
 
           <div className="mt-8 flex gap-8">
             <input
+              value={stationName}
+              onChange={(e) => setStationName(e.target.value)}
               placeholder="정류장 이름을 입력하세요."
               className="flex-1 px-5 py-4 border-2 border-gray-200 rounded-xl outline-none text-lg focus:border-blue-500"
             />
 
-            <button className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700">
+            <button type="button" onClick={searchStation} className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700">
               검색
             </button>
           </div>

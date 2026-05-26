@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const App = () => {
   const [stationName, setStationName] = useState("")
@@ -17,15 +18,31 @@ const App = () => {
       setIsLoading(true)
       setErrMessage("")
 
-      const response = await fetch(`http://localhost:4000/api/stations?name=${stationName}`)
+      const apiKey = import.meta.env.VITE_DAEGU_API_KEY
 
-      if (!response.ok) {
-        throw new Error("정류장 검색 실패")
-      }
+      const response = await axios.get('https://api.odcloud.kr/api/15050946/v1/uddi:3ff249da-858b-4596-88b3-a06f725d7f0f', {
+        params: {
+        page: 1,
+        perPage: 5000,
+        serviceKey: apiKey,
+        },
+      })
 
-      const data = await response.json()
+      const data = response.data
+      const rows = data.data || data.body?.items || []
 
-      setStationList(data)
+      const result = rows
+        .filter((station) => {
+          const name = station["정류소명"] || ""
+          return name.includes(stationName)
+        })
+        .map((station) => ({
+          name: station["정류소명"] || "",
+          busList: station["경유노선"] || "",
+        }))
+
+      setStationList(result)
+
     } catch (error) {
       setErrMessage("정류장 정보를 불러오지 못했습니다.")
       setStationList([])
@@ -38,8 +55,8 @@ const App = () => {
     <div id="Main" className="min-h-screen bg-blue-100 flex items-center justify-center">
       <div id="box" className="p-8 min-w-[900px] min-h-[650px] bg-white rounded-2xl border-4 border-gray-200">
         <div className="flex flex-col gap-5">
-          <div className="font-black text-6xl text-blue-600">대구 버스 도착 알리미</div>
-          <div className="font-medium text-xl text-blue-900">정류장 이름으로 버스 도착 정보를 확인하는 서비스입니다.</div>
+          <div className="font-black text-6xl text-blue-600">대구 버스 정류장 검색</div>
+          <div className="font-medium text-xl text-blue-900">버스 정류장과 정류장의 경유 노선을 확인하는 서비스입니다.</div>
 
           <div className="mt-8 flex gap-8">
             <input
@@ -60,7 +77,7 @@ const App = () => {
 
           {errMessage && (
             <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-600 font-bold">{errMessage}</div>
-          )}
+          )}          
 
         </div>
       </div>

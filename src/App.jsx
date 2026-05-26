@@ -77,7 +77,16 @@ const App = () => {
 
           {errMessage && (
             <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-600 font-bold">{errMessage}</div>
-          )}          
+          )}
+
+          <div className="max-h-[320px] overflow-y-auto pr-2 flex flex-col gap-3">
+            {stationList.map((station) => (
+              <div key={station.id} className="p-5 bg-gray-50 border-2 border-gray-200 rounded-xl">
+                <div className="font-black text-2xl text-blue-600">{station.name}</div>
+                <div className="mt-5 font-bold text-gray-700">경유 노선: {station.busList || "정보 없음"}</div>
+              </div>
+            ))}
+          </div>
 
         </div>
       </div>

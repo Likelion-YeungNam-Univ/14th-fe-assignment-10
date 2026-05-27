@@ -1,7 +1,11 @@
-import React from "react";
+import Weather from "./Weather";
 
-const App = () => {
-  return <div className="text-3xl text-red-600">App</div>;
-};
+function App() {
+  return (
+    <div className="min-h-screen bg-sky-50 flex justify-center items-center">
+      <Weather />
+    </div>
+  );
+}
 
 export default App;

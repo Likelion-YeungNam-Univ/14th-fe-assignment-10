@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import CatCard from "./components/CatCard";
 
 function App() {
@@ -8,11 +9,9 @@ function App() {
   const getCatFact = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://catfact.ninja/fact"); //노션에 나와있는 자료 참고하였습니다!
-      if (!response.ok) throw new Error("네트워크 응답 오류");
+      const response = await axios.get("https://catfact.ninja/fact"); //노션 참고 자료 활용하였습니다.
       
-      const data = await response.json();
-      setCatFact(data.fact);
+      setCatFact(response.data.fact); //서버가 준 응답 객체 데이터 안에 고양이 상식 데이터가 있음.
     } catch (error) {
       console.error(error);
       setCatFact("ㅠㅠ 고양이가 상식을 숨겼나 봐요! 다시 한 번 버튼을 눌러주세요!");

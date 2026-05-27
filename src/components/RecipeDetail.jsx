@@ -106,7 +106,7 @@ const RecipeDetail = ({ recipe, onBack }) => {
       {recipe.RCP_NA_TIP && (
         <div className="bg-blue-50 p-5 rounded-xl border border-blue-100">
           <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
-            💡 저감 조리법 Tip
+            조리법 Tip
           </h4>
           <p className="text-blue-700 text-sm">{recipe.RCP_NA_TIP}</p>
         </div>

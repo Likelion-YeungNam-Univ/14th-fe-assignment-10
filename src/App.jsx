@@ -6,7 +6,7 @@ const App = () => {
   const createPokemontemplate = () => {
     const result = [];
     for(let i = 0; i < 151; i++) {
-      result.push(<Pokemontitle key={i} />);
+      result.push(<Pokemontitle key={i} pokemonId={i + 1} />);
     }
     return result;
   }

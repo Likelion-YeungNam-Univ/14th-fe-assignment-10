@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { baseURL } from './Pokemonapi'
-import {getPokemon} from './Pokemonapi'
+import { baseURL, detailURL } from './Pokemonapi'
 import {useState, useEffect} from 'react'
 
 const Pokemontitle = ({pokemonId}) => {
@@ -12,15 +11,15 @@ const Pokemontitle = ({pokemonId}) => {
       const fetchSinglePokemon = async () => {
         try {
           
-          const speciesRes = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`);
+          const speciesRes = await axios.get(`${baseURL}${pokemonId}/`);
           const koreanNameData = speciesRes.data.names.find(n => n.language.name === 'ko');
           const name = koreanNameData ? koreanNameData.name : speciesRes.data.name;
 
-          //const detailInfo = await getPokemonDetail(pokemonId);
-          //const image = detailInfo.sprites.front_default;
-          //const type = detailInfo.types[0].type.name;
+          const detailInfo = await axios.get(`${detailURL}${pokemonId}/`);
+          const image = detailInfo.data.sprites.front_default;
+          const type = detailInfo.data.types[0].type.name;
 
-          setPokemon({ id: pokemonId, name});
+          setPokemon({ id: pokemonId, name, image, type });
         } catch (error) {
           console.error(`${pokemonId}번 포켓몬 로드 실패:`, error);
         }
@@ -41,11 +40,11 @@ const Pokemontitle = ({pokemonId}) => {
         <p>이름: {pokemon.name}</p>
       </div>
       <div className="bg-white flex justify-center items-center h-full rounded-lg">
-        <p>그림</p>
+        <img src={pokemon.image} alt={pokemon.name} className="w-[100px] h-[100px] object-contain" />
       </div>
-      <div>
+      <div className="flex justify-center">
         <div>
-          <p>타입: 불꽃</p>
+          <p>타입: {pokemon.type}</p>
         </div>
       </div>
     </div>

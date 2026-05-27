@@ -55,7 +55,7 @@ function Home() {
               <span> Category: {meal.strCategory}</span>
               <span> Area: {meal.strArea}</span>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">{meal.strInstructions}</p>
+           <p className="text-xs text-gray-500 leading-relaxed h-16 overflow-y-auto">{meal.strInstructions}</p>
           </div>
         </div>
       ))}

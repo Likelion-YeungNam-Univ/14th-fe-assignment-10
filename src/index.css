@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'DosGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@theme {
+  /* 폰트 이름 설정 (사용할 때: font-pixel) */
+  --font-pixel: 'DosGothic', sans-serif;
+  
+  /* 커스텀 색상 설정 (사용할 때: bg-leafgreen, text-leafgreen 등) */
+  --color-leafgreen: #77CC55;
+}

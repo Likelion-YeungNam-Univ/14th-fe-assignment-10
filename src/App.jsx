@@ -32,7 +32,7 @@ function App() {
         </h1>
 
         <p className="text-gray-700 mb-8">
-          버튼을 누르면 랜덤 강아지를 보여용
+          버튼을 누르면 랜덤 강아지를 보여용~~
         </p>
 
         <button

@@ -7,7 +7,7 @@ const BASE_URL = `http://openapi.foodsafetykorea.go.kr/api/${API_KEY}/COOKRCP01/
   rcpNm: 검색어
   endIdx - startIdx + 1: 한번에 가져올 데이터 수
  */
-export const fetchRecipes = async (rcpNm, startIdx = 1, endIdx = 1) => {
+export const fetchRecipes = async (rcpNm, startIdx = 1, endIdx = 20) => {
   try {
     const url = `${BASE_URL}/${startIdx}/${endIdx}${rcpNm ? `/RCP_NM=${rcpNm}` : ''}`;
 

@@ -1,59 +1,80 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { fetchRecipes } from './api/recipeApi';
+import SearchBar from './components/SearchBar';
+import RecipeList from './components/RecipeList';
+import RecipeDetail from './components/RecipeDetail';
 
 const App = () => {
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [limit, setLimit] = useState(20);
 
-  const testApi = async () => {
+  const handleSearch = async () => {
     if (!keyword.trim()) {
-      console.log('검색어를 입력해주세요.');
+      alert('검색어를 입력해주세요.');
       return;
     }
 
     try {
       setLoading(true);
-      console.log(`"${keyword}" 검색 중...`);
-
-      const data = await fetchRecipes(keyword);
-
-      console.log('--- API 응답 데이터 ---');
-      console.log(data);
-      console.log('-----------------------');
-
-      if (data.length > 0) {
-        alert('검색 성공');
-      } else {
-        alert('검색 결과 없음');
-      }
+      setSelectedRecipe(null);
+      // Use the limit state to control the number of results
+      const data = await fetchRecipes(keyword, 1, limit);
+      setRecipes(data);
     } catch (error) {
-      console.error('API 테스트 실패:', error);
-      alert('API 호출 중 오류 발생');
+      console.error('API 호출 실패:', error);
+      alert('데이터를 가져오는 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-10 font-sans">
-      <h1 className="text-2xl font-bold mb-4">API 연결 테스트</h1>
+    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 font-sans">
+      <header className="bg-white shadow-sm py-6 mb-8 flex-shrink-0">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-3xl font-black text-orange-500 mb-2 tracking-tight">
+            건강한 레시피 검색
+          </h1>
+          <p className="text-gray-500">맛있고 영양가 있는 식단을 찾아보세요!</p>
+        </div>
+      </header>
 
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          placeholder="검색어 입력 (예: 김치)"
-          className="border p-2 rounded w-64"
-        />
-        <button
-          onClick={testApi}
-          disabled={loading}
-          className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
-        >
-          {loading ? '검색 중...' : '데이터 가져오기'}
-        </button>
-      </div>
+      <main className="container mx-auto px-4 pb-20 flex-grow">
+        {!selectedRecipe && (
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            onSearch={handleSearch}
+            loading={loading}
+            limit={limit}
+            setLimit={setLimit}
+          />
+        )}
+
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+          </div>
+        ) : selectedRecipe ? (
+          <RecipeDetail
+            recipe={selectedRecipe}
+            onBack={() => setSelectedRecipe(null)}
+          />
+        ) : (
+          <RecipeList recipes={recipes} onSelectRecipe={setSelectedRecipe} />
+        )}
+      </main>
+
+      <footer className="bg-gray-100 py-8 text-center text-gray-400 text-sm flex-shrink-0">
+        <p>© 2026 건강한 레시피 서비스.</p>
+        <p>
+          본 웹사이트는 식품의약품안전처의 조리식품의 레시피 DB를 통해
+          만들어졌습니다.
+        </p>
+      </footer>
     </div>
   );
 };
